@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">AtlasEngine logo</title>
+  <desc id="desc">A stylized network globe resting on an industrial tower above the AtlasEngine wordmark.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#eef6ff"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#63e6ff"/>
+      <stop offset="100%" stop-color="#0077b6"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#103b7a"/>
+      <stop offset="100%" stop-color="#0a1f4d"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0.65  0 0 1 0 0.9  0 0 0 0.55 0"/>
+    </filter>
+    <style>
+      .outline { fill: none; stroke: #103b7a; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+      .line { fill: none; stroke: #55d7f7; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+      .node { fill: #84f0ff; stroke: #0e4c8d; stroke-width: 4; }
+      .code { fill: #90fbff; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; font-weight: 700; }
+      .brand { fill: #103b7a; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 800; letter-spacing: 5px; }
+      .tag { fill: #18376d; font-family: 'Segoe UI', Arial, sans-serif; letter-spacing: 2px; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+  <ellipse cx="600" cy="164" rx="170" ry="160" fill="#63e6ff" opacity="0.18" filter="url(#glow)"/>
+
+  <g transform="translate(0 8)">
+    <circle cx="600" cy="170" r="132" fill="url(#teal)" stroke="#0d3d7c" stroke-width="12"/>
+    <ellipse cx="600" cy="170" rx="104" ry="132" class="line" opacity="0.9"/>
+    <ellipse cx="600" cy="170" rx="48" ry="132" class="line" opacity="0.8"/>
+    <ellipse cx="600" cy="170" rx="132" ry="54" class="line" opacity="0.9"/>
+    <ellipse cx="600" cy="170" rx="132" ry="100" class="line" opacity="0.7"/>
+    <path d="M488 102 L560 128 L648 106 L715 140 L704 220 L630 264 L550 246 L490 204 Z" class="line" opacity="0.85"/>
+    <path d="M520 82 L556 152 L520 236" class="line" opacity="0.7"/>
+    <path d="M676 106 L630 170 L680 242" class="line" opacity="0.7"/>
+    <path d="M468 164 L556 152 L630 170 L730 164" class="line" opacity="0.7"/>
+    <path d="M528 238 L600 170 L676 106" class="line" opacity="0.65"/>
+
+    <circle cx="520" cy="82" r="9" class="node"/>
+    <circle cx="556" cy="152" r="9" class="node"/>
+    <circle cx="520" cy="236" r="9" class="node"/>
+    <circle cx="676" cy="106" r="9" class="node"/>
+    <circle cx="630" cy="170" r="9" class="node"/>
+    <circle cx="680" cy="242" r="9" class="node"/>
+    <circle cx="730" cy="164" r="9" class="node"/>
+    <circle cx="468" cy="164" r="9" class="node"/>
+    <circle cx="600" cy="94" r="9" class="node"/>
+    <circle cx="600" cy="286" r="9" class="node"/>
+
+    <text x="574" y="155" class="code">{ }</text>
+    <text x="626" y="186" class="code">&lt;/&gt;</text>
+    <text x="531" y="206" class="code">( )</text>
+    <text x="644" y="128" class="code">x, y</text>
+  </g>
+
+  <g transform="translate(0 10)">
+    <path d="M548 292 C560 320 574 334 600 340 C626 334 640 320 652 292" class="outline"/>
+    <path d="M576 338 Q600 314 624 338 L624 376 Q600 394 576 376 Z" fill="#f8fbff" stroke="#0d3d7c" stroke-width="8"/>
+    <path d="M572 384 L532 474 L668 474 L628 384 Z" fill="url(#navy)" stroke="#103b7a" stroke-width="8"/>
+    <path d="M560 474 L520 574" class="outline"/>
+    <path d="M640 474 L680 574" class="outline"/>
+    <path d="M532 474 L668 474" class="outline"/>
+    <path d="M504 574 L696 574" class="outline"/>
+    <path d="M560 474 L640 474" class="outline"/>
+    <path d="M580 420 L620 420" class="line"/>
+    <path d="M574 442 L626 442" class="line"/>
+    <path d="M566 464 L634 464" class="line"/>
+    <path d="M554 492 L602 540 L646 492" class="outline"/>
+    <path d="M532 474 L600 540 L668 474" class="outline" opacity="0.75"/>
+  </g>
+
+  <g transform="translate(0 10)">
+    <text x="600" y="648" text-anchor="middle" class="brand" font-size="78">ATLASENGINE</text>
+    <text x="600" y="694" text-anchor="middle" class="tag" font-size="36">CODE FACTORY FOR GITHUB COPILOT</text>
+  </g>
+</svg>
