@@ -4,6 +4,81 @@
 
 This workspace uses a markdown-based workflow so agents and humans can resume planning work without losing context.
 
+## Installing AtlasEngine Into Another Repository
+
+AtlasEngine is copied into a target repository as repo-local Copilot customization. The target repository should import the workflow files it needs, then adapt the instructions to the target repo's real commands, architecture, release controls, and deployment model.
+
+Core assets to import:
+
+- `.github/copilot-instructions.md`
+- `.github/prompts/`
+- `.github/agents/`
+- `.github/skills/`
+- `ai_docs/WORKFLOW.md`
+- `ai_docs/VERSIONING.md`
+- `ai_docs/templates/`
+- `ai_docs/ideas/INDEX.md`
+
+Recommended additional assets:
+
+- `ai_docs/evals/README.md`
+- `ai_docs/evals/cases/`
+- `.github/pull_request_template.md`
+- `.github/release.yml`
+- `VERSION`
+
+Optional Supabase assets for repos that actually use Supabase:
+
+- `ai_docs/SUPABASE.md`
+- `supabase/`
+- `.github/workflows/supabase-migration-check.yml`
+- `.github/workflows/supabase-staging.yml`
+- `.github/workflows/supabase-production.yml`
+
+New repository import example:
+
+```powershell
+git clone <atlasengine-repo-url> AtlasEngine
+git clone <target-repo-url> <target-repo>
+
+$source = "C:\work\AtlasEngine"
+$target = "C:\work\target-repo"
+
+Copy-Item "$source\.github\copilot-instructions.md" "$target\.github\copilot-instructions.md" -Force
+Copy-Item "$source\.github\prompts" "$target\.github" -Recurse -Force
+Copy-Item "$source\.github\agents" "$target\.github" -Recurse -Force
+Copy-Item "$source\.github\skills" "$target\.github" -Recurse -Force
+Copy-Item "$source\ai_docs\WORKFLOW.md" "$target\ai_docs\WORKFLOW.md" -Force
+Copy-Item "$source\ai_docs\VERSIONING.md" "$target\ai_docs\VERSIONING.md" -Force
+Copy-Item "$source\ai_docs\templates" "$target\ai_docs" -Recurse -Force
+Copy-Item "$source\ai_docs\ideas\INDEX.md" "$target\ai_docs\ideas\INDEX.md" -Force
+```
+
+```bash
+source_repo="$HOME/work/AtlasEngine"
+target_repo="$HOME/work/target-repo"
+
+mkdir -p "$target_repo/.github" "$target_repo/ai_docs/ideas"
+cp "$source_repo/.github/copilot-instructions.md" "$target_repo/.github/copilot-instructions.md"
+cp -R "$source_repo/.github/prompts" "$target_repo/.github/"
+cp -R "$source_repo/.github/agents" "$target_repo/.github/"
+cp -R "$source_repo/.github/skills" "$target_repo/.github/"
+cp "$source_repo/ai_docs/WORKFLOW.md" "$target_repo/ai_docs/WORKFLOW.md"
+cp "$source_repo/ai_docs/VERSIONING.md" "$target_repo/ai_docs/VERSIONING.md"
+cp -R "$source_repo/ai_docs/templates" "$target_repo/ai_docs/"
+cp "$source_repo/ai_docs/ideas/INDEX.md" "$target_repo/ai_docs/ideas/INDEX.md"
+```
+
+Established repository merge rules:
+
+- Review the existing `.github/`, documentation, CI, and release files before importing AtlasEngine assets.
+- Merge `.github/copilot-instructions.md` with repo-native build, test, runtime, security, and deployment guidance instead of overwriting it blindly.
+- Keep the target repository's actual commands authoritative; AtlasEngine orchestrates process, not fake repo behavior.
+- Preserve existing UI tokens, CSS, Tailwind, and theme sources for established products and derive `STYLE.md` from those sources.
+- Only import Supabase assets if Supabase is part of the target architecture.
+- Validate prompt names, agent names, skill references, and copied workflow files after the merge.
+- Run `/EvaluateWorkflow` after the first meaningful customization pass to confirm the imported workflow still behaves correctly in the new repo.
+
 ## Phase 1: Idea Discovery
 
 Optional first step:
