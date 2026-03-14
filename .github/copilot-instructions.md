@@ -51,6 +51,7 @@ Use [ai_docs/VERSIONING.md](../ai_docs/VERSIONING.md), [.github/pull_request_tem
 ## High-Value References
 
 - [ai_docs/WORKFLOW.md](../ai_docs/WORKFLOW.md)
+- [ai_docs/SUPABASE.md](../ai_docs/SUPABASE.md)
 - [ai_docs/templates](../ai_docs/templates)
 - [.github/prompts](prompts)
 - [.github/agents](agents)

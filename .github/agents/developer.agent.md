@@ -20,6 +20,7 @@ Use these reusable skills when relevant:
 - [initiative-state-manager](../skills/initiative-state-manager/SKILL.md) for keeping shared implementation state current
 - [traceability-maintainer](../skills/traceability-maintainer/SKILL.md) when implementation changes requirement, task, or validation linkage
 - [quality-gates-executor](../skills/quality-gates-executor/SKILL.md) for understanding what must pass before a wave may close
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when implementation changes Supabase schema, SQL policies, seed data, or generated database types
 - [handoff-composer](../skills/handoff-composer/SKILL.md) for testing and follow-on task handoffs
 
 ## Responsibilities

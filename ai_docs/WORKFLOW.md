@@ -204,6 +204,7 @@ Reusable agent skills live under `.github/skills/` and should be used when the w
 - `initiative-state-manager`: resume initiative state, update shared memory, normalize artifacts, and reopen stale phases safely
 - `prd-review-loop-rubric`: score and drive PRD review cycles consistently
 - `release-safety-pack`: maintain deployment, rollback, migration, verification, and operate handoff controls
+- `supabase-migration-discipline`: keep Supabase schema changes, drift handling, local validation, and environment promotion consistent
 - `github-hardening-branch-airgap`: audit and harden GitHub branch protections, PR controls, and release-safety settings
 - `quality-gates-executor`: enforce implementation quality gates beyond basic test pass/fail
 - `threat-modeling-and-security-triage`: model trust boundaries, abuse cases, sensitive flows, and residual risk
@@ -211,3 +212,5 @@ Reusable agent skills live under `.github/skills/` and should be used when the w
 - `browser-validation-strategy`: convert PRD and TEST_PLAN scenarios into structured browser validation
 - `workflow-evaluation-rubric`: score workflow quality consistently across cases and revisions
 - `handoff-composer`: create precise, durable handoffs with blockers, inputs, and next actions
+
+For repositories that use Supabase, keep long-lived conventions in `ai_docs/SUPABASE.md`. Do not use markdown files to track which migrations have already been applied; Supabase migration history is the source of truth for that state.

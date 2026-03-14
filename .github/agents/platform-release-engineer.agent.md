@@ -28,6 +28,7 @@ You evaluate whether the initiative can be deployed, observed, supported, and ro
 Use these reusable skills when relevant:
 
 - [release-safety-pack](../skills/release-safety-pack/SKILL.md) for deployment, rollback, migration, verification, and operate handoff controls
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when release readiness depends on Supabase migration order, remote drift, or controlled `db push` execution
 - [handoff-composer](../skills/handoff-composer/SKILL.md) for release escalation and operate handoffs
 
 ## Responsibilities

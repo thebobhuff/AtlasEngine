@@ -24,6 +24,7 @@ Relevant reusable skills for this workflow:
 - [browser-validation-strategy](../skills/browser-validation-strategy/SKILL.md)
 - [handoff-composer](../skills/handoff-composer/SKILL.md)
 - [release-safety-pack](../skills/release-safety-pack/SKILL.md)
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md)
 
 ## Preconditions
 
@@ -185,6 +186,8 @@ Owners: `product-manager-orchestrator`, `project-manager`, and `platform-release
 After the implementation and E2E loops pass, perform a final acceptance and release-readiness check before declaring the initiative ready for `/Ship`.
 
 Use [traceability-maintainer](../skills/traceability-maintainer/SKILL.md) to confirm requirement coverage and [release-safety-pack](../skills/release-safety-pack/SKILL.md) to confirm deployment, rollback, migration, and release-verification readiness before shipping.
+
+Use [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when implementation changes the `supabase/` project, database schema, RLS policies, SQL functions, seed data, or generated database types.
 
 If acceptance fails, reopen the necessary implementation tasks instead of advancing to shipping.
 

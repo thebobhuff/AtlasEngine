@@ -9,7 +9,7 @@
   <a href="VERSION"><img alt="Version" src="https://img.shields.io/badge/version-0.1.0-0284c7?style=for-the-badge"></a>
   <a href=".github/prompts"><img alt="Prompts" src="https://img.shields.io/badge/prompts-11-14b8a6?style=for-the-badge"></a>
   <a href=".github/agents"><img alt="Agents" src="https://img.shields.io/badge/agents-22-2563eb?style=for-the-badge"></a>
-  <a href=".github/skills"><img alt="Skills" src="https://img.shields.io/badge/skills-10-f97316?style=for-the-badge"></a>
+  <a href=".github/skills"><img alt="Skills" src="https://img.shields.io/badge/skills-11-f97316?style=for-the-badge"></a>
   <a href="ai_docs/templates"><img alt="Templates" src="https://img.shields.io/badge/templates-durable%20markdown-a855f7?style=for-the-badge"></a>
 </p>
 
@@ -191,6 +191,7 @@ Reusable skills include:
 - `initiative-state-manager`
 - `prd-review-loop-rubric`
 - `release-safety-pack`
+- `supabase-migration-discipline`
 - `github-hardening-branch-airgap`
 - `quality-gates-executor`
 - `threat-modeling-and-security-triage`
@@ -198,6 +199,10 @@ Reusable skills include:
 - `browser-validation-strategy`
 - `workflow-evaluation-rubric`
 - `handoff-composer`
+
+## Supabase Assets
+
+Repository-level Supabase conventions live in [ai_docs/SUPABASE.md](ai_docs/SUPABASE.md). A starter `supabase/` scaffold is included for migration history, functions, tests, and seed data, and `.github/workflows/supabase-*.yml` provides a minimal CI/CD pattern for pull-request validation plus staged `db push` promotion.
 
 ## Shipping And Release Flow
 

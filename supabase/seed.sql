@@ -1,0 +1,2 @@
+-- Deterministic local seed data belongs here.
+-- Keep this file safe to replay during `supabase db reset`.

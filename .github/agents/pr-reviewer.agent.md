@@ -27,6 +27,7 @@ Use these reusable skills when relevant:
 - [quality-gates-executor](../skills/quality-gates-executor/SKILL.md) for assessing whether validation evidence is sufficient to support merge readiness
 - [handoff-composer](../skills/handoff-composer/SKILL.md) for sending concrete fix guidance back to authors or specialists
 - [release-safety-pack](../skills/release-safety-pack/SKILL.md) when a PR changes rollout, migration, rollback, or release verification expectations
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when a PR changes Supabase migrations, policies, SQL functions, seed data, or generated database types
 - [github-hardening-branch-airgap](../skills/github-hardening-branch-airgap/SKILL.md) when the review depends on branch protections, required checks, or PR control expectations
 
 ## Responsibilities

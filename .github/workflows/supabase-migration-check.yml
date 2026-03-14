@@ -1,0 +1,62 @@
+name: Supabase Migration Check
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/supabase-*.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect Supabase config
+        id: supabase_config
+        shell: bash
+        run: |
+          if [ -f supabase/config.toml ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip when Supabase config is absent
+        if: steps.supabase_config.outputs.enabled != 'true'
+        run: echo "Skipping Supabase migration validation because supabase/config.toml is not present."
+
+      - name: Setup Supabase CLI
+        if: steps.supabase_config.outputs.enabled == 'true'
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local database services
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase db start
+
+      - name: Lint database schema
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase db lint --local --level warning --fail-on error
+
+      - name: Rebuild local database from migrations
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase db reset --local
+
+      - name: Run database tests when present
+        if: steps.supabase_config.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          if compgen -G "supabase/tests/*" > /dev/null; then
+            supabase test db --local
+          else
+            echo "No database tests found under supabase/tests."
+          fi
+
+      - name: Show local migration history
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase migration list --local

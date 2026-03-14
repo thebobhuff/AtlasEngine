@@ -19,6 +19,7 @@ Relevant reusable skills for this workflow:
 
 - [github-hardening-branch-airgap](../skills/github-hardening-branch-airgap/SKILL.md)
 - [release-safety-pack](../skills/release-safety-pack/SKILL.md)
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md)
 - [handoff-composer](../skills/handoff-composer/SKILL.md)
 
 ## Branch Flow Assumption
@@ -32,6 +33,8 @@ Assume the intended promotion flow is:
 The final `staging -> main` pull request must be created for human approval and must not be auto-merged.
 
 Use [github-hardening-branch-airgap](../skills/github-hardening-branch-airgap/SKILL.md) for the detailed production-branch protection expectations and [release-safety-pack](../skills/release-safety-pack/SKILL.md) for the release-safety artifact checklist.
+
+Use [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when release execution includes Supabase schema promotion, drift handling, staged environment mapping, or controlled `supabase db push` steps.
 
 ## Preconditions
 

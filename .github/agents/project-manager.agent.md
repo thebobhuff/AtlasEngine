@@ -31,6 +31,7 @@ Use these reusable skills when relevant:
 - [quality-gates-executor](../skills/quality-gates-executor/SKILL.md) for wave-quality pass/fail discipline
 - [handoff-composer](../skills/handoff-composer/SKILL.md) for implementation and repair handoffs
 - [release-safety-pack](../skills/release-safety-pack/SKILL.md) when implementation affects rollout, rollback, or verification artifacts
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when planning or execution includes Supabase schema work, drift capture, or migration sequencing
 
 ## Responsibilities
 

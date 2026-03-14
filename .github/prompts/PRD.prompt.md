@@ -24,6 +24,7 @@ Relevant reusable skills for this workflow:
 - [traceability-maintainer](../skills/traceability-maintainer/SKILL.md)
 - [handoff-composer](../skills/handoff-composer/SKILL.md)
 - [release-safety-pack](../skills/release-safety-pack/SKILL.md)
+- [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md)
 
 ## Preconditions
 
@@ -202,6 +203,7 @@ Requirements for this step:
 
 - apply [threat-modeling-and-security-triage](../skills/threat-modeling-and-security-triage/SKILL.md) for trust boundaries, abuse cases, mitigations, and residual-risk classification
 - use [release-safety-pack](../skills/release-safety-pack/SKILL.md) when deployment, migration, rollback, or release verification concerns appear during planning
+- use [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when the initiative changes Supabase-managed schema, policies, seed data, or environment promotion assumptions
 
 If this review finds material gaps or unsafe assumptions, update the shared memory files, mark the affected artifact `Needs Revision` in `PHASE2_STATE.md`, and reopen the PRD loop.
 

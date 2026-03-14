@@ -1,0 +1,71 @@
+name: Supabase Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/supabase-*.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: supabase-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_PRODUCTION_DB_PASSWORD }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PRODUCTION_PROJECT_REF }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect Supabase config
+        id: supabase_config
+        shell: bash
+        run: |
+          if [ -f supabase/config.toml ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip when Supabase config is absent
+        if: steps.supabase_config.outputs.enabled != 'true'
+        run: echo "Skipping production migration deploy because supabase/config.toml is not present."
+
+      - name: Setup Supabase CLI
+        if: steps.supabase_config.outputs.enabled == 'true'
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Validate production secrets
+        if: steps.supabase_config.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          test -n "$SUPABASE_ACCESS_TOKEN"
+          test -n "$SUPABASE_DB_PASSWORD"
+          test -n "$SUPABASE_PROJECT_REF"
+
+      - name: Link production project
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF" --password "$SUPABASE_DB_PASSWORD"
+
+      - name: Preview production migration apply
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase db push --linked --dry-run
+
+      - name: Apply migrations to production
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase db push --linked
+
+      - name: Show production migration history
+        if: steps.supabase_config.outputs.enabled == 'true'
+        run: supabase migration list --linked
