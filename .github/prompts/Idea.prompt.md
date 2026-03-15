@@ -15,16 +15,27 @@ When discovery is complete, the next workflow step is phase 2 through the `PRD` 
 
 If the initiative folder has not been initialized yet, recommend running `BootstrapIdea` first.
 
+Relevant reusable skills for this workflow:
+
+- [initiative-state-manager](../skills/initiative-state-manager/SKILL.md)
+- [handoff-composer](../skills/handoff-composer/SKILL.md)
+
 ## Operating Rules
 
 - Ground every question and recommendation in the current codebase, workspace docs, and visible architecture. If the repository is sparse or greenfield, say so explicitly and adapt the interview.
 - Do not write the PRD immediately. This prompt is only for discovery, persistence, and handoff.
 - This prompt owns discovery and handoff only. Do not continue into implementation planning or PRD authoring in this prompt.
 - Do not invent missing facts. If information is unknown, mark it as unknown and ask for it.
-- Ask concise, high-value questions in batches of 3 to 7. Prefer the questions with the highest impact on scope, implementation risk, or product success.
+- Ask exactly one concise, high-value question per turn. Do not ask multi-question batches.
+- Keep the user experience conversational. The interview must feel like a live back-and-forth, not a questionnaire or intake form.
+- Never use a structured multi-question UI or present a list of candidate questions for the user to answer.
+- Never include more than one new question in a turn, and never include more than one question mark in an interview turn unless you are not asking a question at all.
+- Choose the next question based on the single highest-confidence gap remaining in scope, risk, user value, codebase impact, or delivery readiness.
 - For established products, inspect likely visual-system sources such as CSS files, Tailwind config, theme tokens, and shared component styling before asking design questions that the codebase can already answer.
 - If no clear existing style system is present, ask targeted design questions about brand direction, colors, typography, visual tone, and any required visual references.
-- After each batch, briefly summarize what is now clear, what is still uncertain, the current confidence score, and whether the readiness threshold has been met.
+- After each user answer, briefly summarize what is now clear, what is still uncertain, the current confidence score, and whether the readiness threshold has been met.
+- After each user answer, ask the next single best question unless the readiness threshold has been met.
+- Never ask a second new question in the same turn before the user answers the first one.
 
 ## Persistence And Resume
 
@@ -43,14 +54,14 @@ Use the workspace as persistent memory for this interview.
 5. Ensure `ai_docs/ideas/INDEX.md` exists and update the initiative entry when discovery starts, when confidence changes materially, and when `INTERVIEW.md` is completed.
 6. At the start of each run, look for an existing initiative folder and read the shared memory files, `CONTEXT.md`, and `INTERVIEW.md` if they exist.
 7. If prior interview state exists and `INTERVIEW.md` does not yet represent a completed handoff, resume the interview from the saved state instead of restarting.
-8. After each interview round, update the shared memory files, `CONTEXT.md`, and the initiative entry in `ai_docs/ideas/INDEX.md` so the session can be resumed later.
+8. After each interview turn, update the shared memory files, `CONTEXT.md`, and the initiative entry in `ai_docs/ideas/INDEX.md` so the session can be resumed later.
 
 When resuming, begin by summarizing:
 
 - what is already known
 - what changed since the last checkpoint
 - what is still missing
-- the next highest-value questions
+- the next highest-value question
 
 ## Phase 1: Discovery Interview
 
@@ -58,7 +69,7 @@ Before asking questions:
 
 1. Resolve the initiative folder under `ai_docs/ideas/` and load any existing memory files.
 2. Inspect the current workspace for relevant code, docs, APIs, domain concepts, and technical constraints.
-3. Summarize the current implementation context in 5 to 10 bullets.
+3. Summarize the current implementation context in 5 to 10 bullets internally, and keep the user-facing summary brief unless the user asks for more detail.
 4. Identify likely touchpoints, dependencies, and gaps that the PM should clarify.
 
 During the interview, cover these areas:
@@ -75,9 +86,18 @@ During the interview, cover these areas:
 - Delivery constraints, rollout expectations, and timeline pressure
 - Risks, assumptions, and unresolved questions
 
+Question flow rules:
+
+- Ask exactly one primary question at a time.
+- Phrase that question in natural conversational prose, not as a checklist item, numbered prompt, or survey field.
+- If a question truly needs framing, add a short one-line reason before it, but keep the turn centered on that single question.
+- Do not bundle follow-up questions. Use later turns for follow-ups.
+- Re-prioritize after every answer based on the updated confidence score and category ratings.
+- Prefer the question that most reduces blocking uncertainty for the fewest assumptions.
+
 ## Readiness Threshold
 
-The interview is a loop. Keep interviewing, refining, and updating the memory files until the confidence threshold is met.
+The interview is a loop. Keep interviewing one question at a time, refining, and updating the memory files until the confidence threshold is met.
 
 Do not move to handoff document generation until both conditions are true:
 
@@ -104,7 +124,7 @@ Use this confidence model:
 - 80% to 89%: nearly ready, but a few answers are still needed for a credible handoff
 - 90% to 100%: sufficient confidence to take the idea to the product team
 
-After each interview round, output a short readiness checkpoint using this structure:
+After each user answer, output a short readiness checkpoint using this structure:
 
 ```md
 ## Discovery Checkpoint
@@ -117,6 +137,8 @@ After each interview round, output a short readiness checkpoint using this struc
 ```
 
 If the threshold is not met, continue the interview. Do not draft the PRD or planning output.
+
+After the checkpoint, end the turn with exactly one next question in plain conversational wording.
 
 ## Phase 2: INTERVIEW.md Handoff
 

@@ -98,6 +98,8 @@ Authoritative files in `ai_docs/ideas/<initiative-slug>/`:
 Rules:
 
 - Discovery stays open until confidence is at least 90%.
+- `/Idea` runs as a one-question-at-a-time interview loop and must emit a visible confidence checkpoint after every user answer.
+- `/Idea` should ask the next single highest-value question after each checkpoint until all critical categories are Clear or remaining Partial items are explicitly non-blocking.
 - Discovery should inspect existing CSS, Tailwind, theme, or design-token sources when the project already exists and only ask style-direction questions when those sources do not establish a clear visual language.
 - `INTERVIEW.md` is the primary handoff document to phase 2.
 - Shared memory files continue into phase 2 and must not be discarded.

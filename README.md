@@ -167,7 +167,7 @@ Key rule: if downstream work finds a contradiction, the upstream phase is reopen
 | Prompt | Primary Role | Purpose | Key Outputs |
 | --- | --- | --- | --- |
 | `/BootstrapIdea` | `agent` | Create or normalize a deterministic initiative workspace | `PHASE1_STATE.md`, `TEAM_MEMORY.md`, `INTERVIEW.md`, ideas index entry |
-| `/Idea` | `idea-discovery` | Run phase-1 discovery and prepare planning handoff | `INTERVIEW.md`, shared phase-1 memory |
+| `/Idea` | `idea-discovery` | Run phase-1 discovery as a single-question confidence loop and prepare planning handoff | `INTERVIEW.md`, shared phase-1 memory |
 | `/PRD` | `product-manager-orchestrator` | Run phase-2 planning with research, PRD loops, security, UX, UI, testing, and plan output | `PRD.md`, `PLAN.md`, `TRACEABILITY.md`, release-safety artifacts |
 | `/Implementation` | `project-manager` | Execute wave-based engineering work with test and E2E loops | `TASKS.md`, `IMPLEMENTATION_STATE.md`, `TEST_REPORT.md`, `E2E_REPORT.md`, `RETRO.md` |
 | `/Execution` | `senior-engineer` | Optional repo-specific task refinement for implementation work | `EXECUTION_TASKS.md` |
