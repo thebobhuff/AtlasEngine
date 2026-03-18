@@ -20,10 +20,12 @@ Use this skill whenever requirements, implementation tasks, validation artifacts
 
 1. Read `PRD.md` and extract requirement IDs or stable requirement statements.
 2. Map each requirement to one or more task IDs in `TASKS.md`.
-3. Map each requirement to planned test coverage in `TEST_PLAN.md` and observed validation in `TEST_REPORT.md` or `E2E_REPORT.md`.
-4. Map user-visible delivered scope to `RELEASE_NOTES.md` when relevant.
-5. Record uncovered requirements and validation gaps explicitly.
-6. Reopen the relevant upstream artifact if traceability can no longer be maintained honestly.
+3. Map each requirement to concrete implementation evidence such as files, modules, migrations, or integration points changed during delivery.
+4. Map each requirement to planned test coverage in `TEST_PLAN.md` and observed validation evidence in `TEST_REPORT.md` or `E2E_REPORT.md`.
+5. Record the acceptance owner and any release, migration, rollout, or compatibility dependency tied to the requirement.
+6. Map user-visible delivered scope to `RELEASE_NOTES.md` when relevant.
+7. Record uncovered requirements, missing implementation evidence, and validation gaps explicitly.
+8. Reopen the relevant upstream artifact if traceability can no longer be maintained honestly.
 
 ## References
 

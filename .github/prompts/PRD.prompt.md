@@ -32,7 +32,17 @@ Relevant reusable skills for this workflow:
 - Require `INTERVIEW.md` to exist before starting phase 2.
 - If the folder already contains phase-2 artifacts, resume from them instead of restarting.
 - Maintain all generated files inside the initiative folder.
+- Read `ai_docs/WORKFLOW_PROFILE.md` when it exists and apply its planning mode and force-full triggers.
 - Use the markdown templates in `ai_docs/templates/` when creating or normalizing all phase-2 memory files and artifacts.
+
+## Workflow Profile Controls
+
+- If `ai_docs/WORKFLOW_PROFILE.md` does not exist, default to `Full` planning mode.
+- Supported planning modes are `Full` and `Fast`.
+- `Fast` mode is only valid when the profile allows it and no force-full trigger applies.
+- Force `Full` mode when any trigger applies, especially for security, privacy, migration, release-safety, supply-chain, major UX/UI, or unclear repository-risk changes.
+- Record the active planning mode and any force-full reason in `PHASE2_STATE.md`.
+- Keep AtlasEngine documentation-first: the workflow profile tunes the workflow, but does not replace `ai_docs/WORKFLOW.md`.
 
 ## Shared Memory System
 
@@ -59,29 +69,32 @@ Use [initiative-state-manager](../skills/initiative-state-manager/SKILL.md) for 
 
 ## Required Artifacts
 
-Create and maintain these files during the workflow:
+Always create and maintain these files during the workflow:
 
 - `PHASE2_STATE.md`
 - `TEAM_MEMORY.md`
 - `DECISIONS.md`
 - `AGENT_HANDOFFS.md`
-- `RESEARCH.md`
 - `CODEBASE_RESEARCH.md`
 - `PRD.md`
 - `PRD_NOTES.md`
 - `PRD_REVIEW_STATE.md`
-- `THREAT_MODEL.md`
-- `SECURITY_REVIEW.md`
-- `SUPPLY_CHAIN.md`
-- `STYLE.md`
-- `UX.md`
-- `UI.md`
 - `TEST_PLAN.md`
 - `PLAN.md`
 - `TRACEABILITY.md`
+
+Create and maintain these files when the active planning mode is `Full` or a force-full trigger applies:
+
+- `RESEARCH.md` when external or market context is needed
+- `THREAT_MODEL.md`
+- `SECURITY_REVIEW.md`
+- `SUPPLY_CHAIN.md`
+- `STYLE.md` when user-facing work is affected
+- `UX.md` when user flows change materially
+- `UI.md` when interface structure changes materially
 - `DEPLOYMENT_PLAN.md`
 - `ROLLBACK_PLAN.md`
-- `MIGRATION_PLAN.md`
+- `MIGRATION_PLAN.md` when schema, data, or compatibility changes are relevant
 - `RELEASE_VERIFICATION.md`
 
 ## Workflow
@@ -90,7 +103,7 @@ Create and maintain these files during the workflow:
 
 Owner: `product-manager-orchestrator`
 
-The product manager inspects `INTERVIEW.md`, summarizes the initiative, identifies the main unknowns, and gives focused instructions to the product research agent.
+The product manager inspects `INTERVIEW.md`, summarizes the initiative, identifies the main unknowns, decides whether external or market research is needed, and gives focused instructions to the product research agent when that workstream is justified.
 
 Before handing off, initialize or refresh:
 
@@ -105,9 +118,9 @@ Record the current stage as `Research`, the active owner, the main unknowns, and
 
 Owners: `product-researcher` and `senior-engineer`
 
-Run these workstreams in parallel when possible:
+Run these workstreams in parallel when possible and when they are justified by the active planning mode:
 
-- `product-researcher` researches the web for similar products, summarizes their features, and captures what customers like and dislike about those platforms in `RESEARCH.md` using `ai_docs/templates/RESEARCH.template.md`.
+- `product-researcher` researches the web for similar products, summarizes their features, and captures what customers like and dislike about those platforms in `RESEARCH.md` using `ai_docs/templates/RESEARCH.template.md` when external or market context is needed.
 - `senior-engineer` researches the codebase, identifies likely implementation locations, relevant files, extension points, constraints, and architectural risks in `CODEBASE_RESEARCH.md` using `ai_docs/templates/CODEBASE_RESEARCH.template.md`.
 
 Both owners must update `TEAM_MEMORY.md` with findings and `AGENT_HANDOFFS.md` with the handoff summary back to the orchestrator.
@@ -191,7 +204,7 @@ If any specialist contributor finds a material contradiction during the loop, up
 
 Owners: `security-reviewer`, `platform-release-engineer`, and `github-devops-engineer` when repository automation or PR controls matter
 
-Once `PRD.md` has passed the review loop, and only then, run a required security and release-safety review.
+Once `PRD.md` has passed the review loop, and only then, run this review when the active planning mode is `Full` or a force-full trigger applies.
 
 Create:
 
@@ -212,6 +225,8 @@ If this review finds material gaps or unsafe assumptions, update the shared memo
 Owner: `ui-designer`
 
 Once `PRD.md` has passed the review loop, `ui-designer` determines whether an existing visual system is already present.
+
+Skip this step only when the active planning mode is `Fast` and the change does not materially affect a user-facing surface.
 
 Use `INTERVIEW.md`, `CODEBASE_RESEARCH.md`, and the current repo state to inspect likely style sources such as:
 
@@ -242,6 +257,8 @@ Owner: `ux-designer`
 
 Once `PRD.md` has passed the review loop, and only then, `ux-designer` creates `UX.md` from `PRD.md`.
 
+Skip this step only when the active planning mode is `Fast` and the change does not materially alter user journeys.
+
 Use `ai_docs/templates/UX.template.md` as the structure baseline.
 
 Requirements for `UX.md`:
@@ -258,6 +275,8 @@ Owner: `ui-designer`
 
 After `STYLE.md` and `UX.md` are complete, `ui-designer` creates `UI.md` using `PRD.md`, `STYLE.md`, and `UX.md`.
 
+Skip this step only when the active planning mode is `Fast` and the change does not materially alter interface structure.
+
 Use `ai_docs/templates/UI.template.md` as the structure baseline.
 
 Requirements for `UI.md`:
@@ -272,7 +291,7 @@ If `ui-designer` finds a material contradiction with `PRD.md` or `UX.md`, update
 
 Owner: `test-engineer`
 
-After `PRD.md`, `STYLE.md`, `UX.md`, and `UI.md` are complete, `test-engineer` creates `TEST_PLAN.md`.
+After `PRD.md` and all other required upstream design artifacts for the active planning mode are complete, `test-engineer` creates `TEST_PLAN.md`.
 
 Use `ai_docs/templates/TEST_PLAN.template.md` as the structure baseline.
 
@@ -284,7 +303,7 @@ If `test-engineer` finds missing or untestable acceptance criteria, update the s
 
 Owners: `project-manager` and `product-manager-orchestrator`
 
-After all artifacts are complete, `project-manager` and the product manager jointly evaluate the full set of markdown artifacts and produce `PLAN.md`.
+After all required artifacts for the active planning mode are complete, `project-manager` and the product manager jointly evaluate the full set of required markdown artifacts and produce `PLAN.md`.
 
 `PLAN.md` should define:
 
@@ -302,12 +321,14 @@ Before creating `PLAN.md`, confirm in `PHASE2_STATE.md` that all required upstre
 Also create:
 
 - `TRACEABILITY.md` using `ai_docs/templates/TRACEABILITY.template.md`
-- `DEPLOYMENT_PLAN.md` using `ai_docs/templates/DEPLOYMENT_PLAN.template.md`
-- `ROLLBACK_PLAN.md` using `ai_docs/templates/ROLLBACK_PLAN.template.md`
+- `DEPLOYMENT_PLAN.md` using `ai_docs/templates/DEPLOYMENT_PLAN.template.md` when the active planning mode is `Full` or release-safety risk requires it
+- `ROLLBACK_PLAN.md` using `ai_docs/templates/ROLLBACK_PLAN.template.md` when the active planning mode is `Full` or release-safety risk requires it
 - `MIGRATION_PLAN.md` using `ai_docs/templates/MIGRATION_PLAN.template.md` when schema, data, or compatibility changes are relevant
-- `RELEASE_VERIFICATION.md` using `ai_docs/templates/RELEASE_VERIFICATION.template.md`
+- `RELEASE_VERIFICATION.md` using `ai_docs/templates/RELEASE_VERIFICATION.template.md` when the active planning mode is `Full` or release-safety risk requires it
 
 Use [traceability-maintainer](../skills/traceability-maintainer/SKILL.md) for requirement mapping and [release-safety-pack](../skills/release-safety-pack/SKILL.md) for deployment, rollback, migration, and release-verification quality.
+
+`TRACEABILITY.md` must include implementation evidence expectations, validation evidence expectations, acceptance owner, and release or migration dependency notes for each requirement.
 
 ### 11. Approval Gate
 
@@ -338,19 +359,19 @@ Use this structure in the final PRD-phase response:
 | PRD.md | Complete | Approved product requirements |
 | PRD_NOTES.md | Complete | PRD review notes |
 | PRD_REVIEW_STATE.md | Complete | PRD loop state |
-| THREAT_MODEL.md | Complete | Threat and trust-boundary analysis |
-| SECURITY_REVIEW.md | Complete | Security findings and decision |
-| SUPPLY_CHAIN.md | Complete | Dependency and integration risk review |
-| STYLE.md | Complete | Visual system guidance |
-| UX.md | Complete | UX specification |
-| UI.md | Complete | UI specification |
+| THREAT_MODEL.md | Complete or Not Required | Threat and trust-boundary analysis |
+| SECURITY_REVIEW.md | Complete or Not Required | Security findings and decision |
+| SUPPLY_CHAIN.md | Complete or Not Required | Dependency and integration risk review |
+| STYLE.md | Complete or Not Required | Visual system guidance |
+| UX.md | Complete or Not Required | UX specification |
+| UI.md | Complete or Not Required | UI specification |
 | TEST_PLAN.md | Complete | Validation strategy |
 | PLAN.md | Complete | Delivery plan |
 | TRACEABILITY.md | Complete | Requirement-to-delivery coverage map |
-| DEPLOYMENT_PLAN.md | Complete | Release deployment strategy |
-| ROLLBACK_PLAN.md | Complete | Rollback triggers and steps |
-| MIGRATION_PLAN.md | Complete | Data and schema change plan |
-| RELEASE_VERIFICATION.md | Complete | Release readiness checks |
+| DEPLOYMENT_PLAN.md | Complete or Not Required | Release deployment strategy |
+| ROLLBACK_PLAN.md | Complete or Not Required | Rollback triggers and steps |
+| MIGRATION_PLAN.md | Complete or Not Required | Data and schema change plan |
+| RELEASE_VERIFICATION.md | Complete or Not Required | Release readiness checks |
 
 ## Approval Request
 Approve implementation planning? Reply with approval to continue.
@@ -373,6 +394,7 @@ Approval rules:
 - If the loop is incomplete, continue from the next required review cycle instead of restarting the PRD from scratch.
 - Resume overall workflow state from `PHASE2_STATE.md`, `TEAM_MEMORY.md`, `DECISIONS.md`, and `AGENT_HANDOFFS.md` when they exist.
 - If any downstream artifact is marked stale or `Needs Revision`, reopen the required upstream phase instead of continuing linearly.
+- Keep the structured summary blocks in `PHASE2_STATE.md` and `AGENT_HANDOFFS.md` current as work progresses.
 
 ## Output Rules
 
@@ -383,7 +405,9 @@ Approval rules:
 - Explicitly distinguish confirmed facts, assumptions, and unresolved issues.
 - Use the current workspace and fetched sources as evidence.
 - Treat the shared memory files as required state transfer between agents and teams.
-- Treat security review, release-safety planning, and traceability as required phase-2 outputs, not optional add-ons.
+- Treat traceability as a required phase-2 output in every planning mode.
+- Treat security review and release-safety planning as required whenever the active mode is `Full` or force-full triggers apply.
+- Do not stay in `Fast` mode when new evidence shows the initiative is riskier than first assumed. Promote to `Full`, record the reason, and continue.
 - End the PRD phase with the approval gate response instead of assuming automatic continuation.
 
 Begin by locating the initiative folder, reading `INTERVIEW.md`, and launching the research phase.

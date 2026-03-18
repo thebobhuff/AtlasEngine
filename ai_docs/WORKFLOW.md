@@ -15,6 +15,7 @@ Core assets to import:
 - `.github/agents/`
 - `.github/skills/`
 - `ai_docs/WORKFLOW.md`
+- `ai_docs/WORKFLOW_PROFILE.md`
 - `ai_docs/VERSIONING.md`
 - `ai_docs/templates/`
 - `ai_docs/ideas/INDEX.md`
@@ -49,6 +50,7 @@ Copy-Item "$source\.github\prompts" "$target\.github" -Recurse -Force
 Copy-Item "$source\.github\agents" "$target\.github" -Recurse -Force
 Copy-Item "$source\.github\skills" "$target\.github" -Recurse -Force
 Copy-Item "$source\ai_docs\WORKFLOW.md" "$target\ai_docs\WORKFLOW.md" -Force
+Copy-Item "$source\ai_docs\WORKFLOW_PROFILE.md" "$target\ai_docs\WORKFLOW_PROFILE.md" -Force
 Copy-Item "$source\ai_docs\VERSIONING.md" "$target\ai_docs\VERSIONING.md" -Force
 Copy-Item "$source\ai_docs\templates" "$target\ai_docs" -Recurse -Force
 Copy-Item "$source\ai_docs\ideas\INDEX.md" "$target\ai_docs\ideas\INDEX.md" -Force
@@ -64,6 +66,7 @@ cp -R "$source_repo/.github/prompts" "$target_repo/.github/"
 cp -R "$source_repo/.github/agents" "$target_repo/.github/"
 cp -R "$source_repo/.github/skills" "$target_repo/.github/"
 cp "$source_repo/ai_docs/WORKFLOW.md" "$target_repo/ai_docs/WORKFLOW.md"
+cp "$source_repo/ai_docs/WORKFLOW_PROFILE.md" "$target_repo/ai_docs/WORKFLOW_PROFILE.md"
 cp "$source_repo/ai_docs/VERSIONING.md" "$target_repo/ai_docs/VERSIONING.md"
 cp -R "$source_repo/ai_docs/templates" "$target_repo/ai_docs/"
 cp "$source_repo/ai_docs/ideas/INDEX.md" "$target_repo/ai_docs/ideas/INDEX.md"
@@ -74,10 +77,24 @@ Established repository merge rules:
 - Review the existing `.github/`, documentation, CI, and release files before importing AtlasEngine assets.
 - Merge `.github/copilot-instructions.md` with repo-native build, test, runtime, security, and deployment guidance instead of overwriting it blindly.
 - Keep the target repository's actual commands authoritative; AtlasEngine orchestrates process, not fake repo behavior.
+- Keep `ai_docs/WORKFLOW_PROFILE.md` lightweight. Use it to tune path selection and evidence depth, not to replace repo-native truth.
 - Preserve existing UI tokens, CSS, Tailwind, and theme sources for established products and derive `STYLE.md` from those sources.
 - Only import Supabase assets if Supabase is part of the target architecture.
 - Validate prompt names, agent names, skill references, and copied workflow files after the merge.
 - Run `/EvaluateWorkflow` after the first meaningful customization pass to confirm the imported workflow still behaves correctly in the new repo.
+- Run `/WorkflowHealth` before treating a transplanted workflow as ready when prompts, templates, or shared state rules changed materially.
+
+## Workflow Profile
+
+`ai_docs/WORKFLOW_PROFILE.md` is the repo-level tuning surface for AtlasEngine.
+
+Rules:
+
+- Keep the file lightweight and human-readable.
+- Use it to declare whether the default planning path is `Full` or `Fast`.
+- Use it to declare which risk triggers must promote work from `Fast` to `Full`.
+- Use it to record implementation expectations such as structured summary upkeep and traceability evidence depth.
+- Do not use it to replace `ai_docs/WORKFLOW.md`, repo-native commands, deployment truth, or migration truth.
 
 ## Phase 1: Idea Discovery
 
@@ -138,14 +155,23 @@ Additional authoritative files in the same initiative folder:
 Rules:
 
 - The PRD loop must run for at least two cycles and up to five.
-- Security review, release-safety planning, and traceability are required phase-2 outputs.
+- Traceability is required in every planning mode.
+- Security review and release-safety planning are required whenever the active planning mode is `Full` or a force-full trigger applies.
 - `STYLE.md` should be created by the design workflow before `UI.md`; for established products it should be derived from existing CSS, Tailwind, token, or theme sources, and for greenfield work it should be derived from discovery answers rather than guesswork.
 - If UX, UI, or testing finds a material contradiction, reopen the upstream phase rather than proceeding with stale artifacts.
 - `PHASE2_STATE.md` is the stage-level source of truth for what is complete, stale, blocked, or ready.
+- `PHASE2_STATE.md`, `IMPLEMENTATION_STATE.md`, `AGENT_HANDOFFS.md`, and `RELEASE_VERIFICATION.md` should keep their structured summary sections current for resumability.
 - `/PRD` runs the product-planning workflow.
 - `/Implementation` turns the approved planning artifacts into `TASKS.md`, executes implementation in waves, runs testing loops and quality gates, performs a final acceptance check, and ends with `RETRO.md`.
 - The implementation testing loop retries up to 3 times per wave before marking the wave blocked.
 - After code testing passes, `/Implementation` runs a browser-based E2E loop against `TEST_PLAN.md` and `PRD.md`, retrying up to 3 times before blocking the initiative.
+
+Planning mode rules:
+
+- `Full` is the default mode when no workflow profile exists.
+- `Fast` may be used only when `ai_docs/WORKFLOW_PROFILE.md` allows it and the initiative remains low-risk after codebase research.
+- `Fast` still requires durable planning memory, PRD review loops, `TEST_PLAN.md`, `PLAN.md`, and `TRACEABILITY.md`.
+- Any security, migration, release-safety, supply-chain, major UX/UI, or unclear repository-risk trigger promotes the initiative to `Full`.
 
 ## Phase 3: Execution Planning
 
@@ -263,6 +289,17 @@ Rules:
 - Eval findings should focus on structural workflow gaps, unsafe transitions, missing gates, and weak state transfer.
 - Reuse the same sample cases over time so workflow changes can be compared.
 
+## Workflow Health
+
+Use `/WorkflowHealth` when you need a direct health audit of workflow state rather than a scenario-based evaluation.
+
+Rules:
+
+- `/WorkflowHealth` checks a real initiative, bug run, review run, eval run, or repo-customization scope for missing artifacts, invalid stage transitions, stale downstream outputs, owner mismatches, and repair actions.
+- `WORKFLOW_HEALTH_REPORT.md` is the durable output of that audit.
+- Prefer repair guidance and reopen decisions over creating alternate state systems.
+- Use `/WorkflowHealth` after major customization changes and before treating a transplanted workflow as ready.
+
 ## Shared Memory Rules
 
 - Every agent reads shared memory before acting.
@@ -273,6 +310,8 @@ Rules:
 ## Templates
 
 Shared templates live in `ai_docs/templates/` and define the baseline structure for phase states, handoffs, pull-request review artifacts, bug remediation artifacts, security artifacts, planning artifacts including style guidance, release-safety artifacts, shipping artifacts, post-release operating artifacts, and workflow eval artifacts.
+
+These templates also include `WORKFLOW_PROFILE` and `WORKFLOW_HEALTH_REPORT` for repo-level tuning and workflow-state audits.
 
 ## Shared Skills
 

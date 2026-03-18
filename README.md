@@ -7,7 +7,7 @@
 <p align="center">
   <a href="ai_docs/WORKFLOW.md"><img alt="Workflow" src="https://img.shields.io/badge/workflow-AI%20delivery%20factory-0ea5e9?style=for-the-badge&logo=githubactions&logoColor=white"></a>
   <a href="VERSION"><img alt="Version" src="https://img.shields.io/badge/version-0.1.0-0284c7?style=for-the-badge"></a>
-  <a href=".github/prompts"><img alt="Prompts" src="https://img.shields.io/badge/prompts-11-14b8a6?style=for-the-badge"></a>
+  <a href=".github/prompts"><img alt="Prompts" src="https://img.shields.io/badge/prompts-12-14b8a6?style=for-the-badge"></a>
   <a href=".github/agents"><img alt="Agents" src="https://img.shields.io/badge/agents-22-2563eb?style=for-the-badge"></a>
   <a href=".github/skills"><img alt="Skills" src="https://img.shields.io/badge/skills-11-f97316?style=for-the-badge"></a>
   <a href="ai_docs/templates"><img alt="Templates" src="https://img.shields.io/badge/templates-durable%20markdown-a855f7?style=for-the-badge"></a>
@@ -117,6 +117,8 @@ flowchart LR
 
 The authoritative workflow guide lives in [ai_docs/WORKFLOW.md](ai_docs/WORKFLOW.md). Initiative work is stored under [ai_docs/ideas](ai_docs/ideas), bug remediation under `ai_docs/bugs/<bug-run-slug>/`, review runs under `ai_docs/reviews/<pr-review-slug>/`, and evaluation runs under [ai_docs/evals](ai_docs/evals).
 
+Repository-level workflow tuning lives in [ai_docs/WORKFLOW_PROFILE.md](ai_docs/WORKFLOW_PROFILE.md). It keeps AtlasEngine lightweight while letting a target repo choose between a full planning path and a bounded fast path.
+
 ## Operating Model
 
 ```mermaid
@@ -162,6 +164,8 @@ Core shared files:
 
 Key rule: if downstream work finds a contradiction, the upstream phase is reopened and the shared memory must be updated instead of silently continuing.
 
+State and handoff templates now also include structured summary blocks so fresh-context subagents can resume without reconstructing the entire workflow state from narrative sections alone.
+
 ## Prompt Catalog
 
 | Prompt | Primary Role | Purpose | Key Outputs |
@@ -177,6 +181,7 @@ Key rule: if downstream work finds a contradiction, the upstream phase is reopen
 | `/PRReview` | `pr-reviewer` | Create a durable merge review with findings and recommendation | `PR_REVIEW_STATE.md`, `PR_REVIEW_REPORT.md` |
 | `/DevOpsAudit` | `github-devops-engineer` | Audit GitHub branch protections, PR controls, CI/CD, and release hardening | `ai_docs/DEVOPS_DEFICIENCIES.md` |
 | `/EvaluateWorkflow` | `workflow-evaluator` | Score the workflow system against reusable scenarios | `EVAL_PLAN.md`, `CASE_<slug>.md`, `EVAL_REPORT.md` |
+| `/WorkflowHealth` | `workflow-evaluator` | Audit workflow-state drift, resumability, and repair actions for a live target | `WORKFLOW_HEALTH_REPORT.md` |
 
 ## Specialist Layers
 
@@ -248,6 +253,8 @@ Versioning and release policy are defined in [ai_docs/VERSIONING.md](ai_docs/VER
 
 AtlasEngine is meant to be copied into a target repository as repo-local Copilot customization, not consumed as a package dependency. Clone this repository, copy the workflow assets you need, then adapt the repo-specific instructions before asking Copilot to use the workflow.
 
+Keep AtlasEngine as a documentation-first orchestration layer. Do not turn it into a second workflow engine or shadow source of truth for runtime, deployment, or migration state.
+
 ### Core Assets To Copy
 
 | Path | Required | Purpose |
@@ -257,6 +264,7 @@ AtlasEngine is meant to be copied into a target repository as repo-local Copilot
 | `.github/agents/` | Yes | Specialist agents used by the prompts |
 | `.github/skills/` | Yes | Reusable rubrics and methods referenced by prompts and agents |
 | `ai_docs/WORKFLOW.md` | Yes | Human-readable workflow guide and phase rules |
+| `ai_docs/WORKFLOW_PROFILE.md` | Recommended | Lightweight repo-level tuning for full versus fast planning and implementation expectations |
 | `ai_docs/VERSIONING.md` | Yes | Versioning and release policy used by shipping workflows |
 | `ai_docs/templates/` | Yes | Durable markdown templates used to initialize initiative, bug, review, and release artifacts |
 | `ai_docs/ideas/INDEX.md` | Yes | Starting index for initiative tracking |

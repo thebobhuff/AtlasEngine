@@ -3,11 +3,14 @@
 ## Initiative
 - Name:
 
-| Requirement ID | Requirement Summary | Task IDs | Test Coverage | E2E Coverage | Release Note |
-| --- | --- | --- | --- | --- | --- |
-| R-1 |  |  |  |  |  |
+| Requirement ID | Requirement Summary | Task IDs | Implementation Evidence | Validation Evidence | E2E Coverage | Release / Migration Dependency | Release Note | Acceptance Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| R-1 |  |  |  |  |  |  |  |  |
 
 ## Coverage Gaps
+-
+
+## Missing Evidence
 -
 
 ## Notes

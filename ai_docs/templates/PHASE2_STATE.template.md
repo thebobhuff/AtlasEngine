@@ -4,9 +4,19 @@
 - Name:
 - Folder:
 
+## Structured Summary
+- Planning mode: Full | Fast
+- Current owner:
+- Next owner:
+- Ready for:
+- Blocked by:
+- Stale artifacts:
+- Decisions referenced:
+
 ## Workflow Status
 - Current stage: Research | PRD Drafting | PRD Review Loop | Security Review | UX | UI | Testing | Final Planning | Implementation | Shipping | Operate | Complete | Blocked
 - Current owner:
+- Next owner:
 - Overall status: In Progress | Complete | Blocked
 - Last updated by:
 

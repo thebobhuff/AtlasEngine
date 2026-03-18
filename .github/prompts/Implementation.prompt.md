@@ -30,9 +30,11 @@ Relevant reusable skills for this workflow:
 
 - Resolve the initiative folder from the provided input.
 - Require `PLAN.md` to exist before implementation planning starts.
-- Read `PLAN.md`, `UI.md`, `UX.md`, and `TEST_PLAN.md` as primary implementation inputs.
+- Read `PLAN.md` and `TEST_PLAN.md` as primary implementation inputs.
+- Read `UI.md` and `UX.md` when they exist or when the active planning mode required them.
 - Read `PRD.md`, `CODEBASE_RESEARCH.md`, `IMPLEMENTATION_PLAN.md`, `TRACEABILITY.md`, `DEPLOYMENT_PLAN.md`, `ROLLBACK_PLAN.md`, `MIGRATION_PLAN.md`, and `RELEASE_VERIFICATION.md` when they exist as supporting context.
 - Read `PHASE2_STATE.md`, `TEAM_MEMORY.md`, `DECISIONS.md`, and `AGENT_HANDOFFS.md` before planning.
+- Read `ai_docs/WORKFLOW_PROFILE.md` when it exists and carry forward the active planning mode and implementation expectations.
 - If `TASKS.md`, `IMPLEMENTATION_STATE.md`, or `RETRO.md` already exist, resume from them instead of restarting from scratch.
 
 ## Required Artifacts
@@ -52,6 +54,12 @@ Keep these release-safety and traceability artifacts current when implementation
 - `ROLLBACK_PLAN.md`
 - `MIGRATION_PLAN.md`
 - `RELEASE_VERIFICATION.md`
+
+Keep the structured summary blocks current in these state-transfer artifacts:
+
+- `PHASE2_STATE.md`
+- `AGENT_HANDOFFS.md`
+- `IMPLEMENTATION_STATE.md`
 
 ## Workflow
 
@@ -94,6 +102,8 @@ Use engineering judgment and dependency analysis to determine whether each task 
 Also build a dependency graph in `TASKS.md` using Mermaid.
 
 Use [traceability-maintainer](../skills/traceability-maintainer/SKILL.md) to preserve the mapping from requirements to tasks and planned validation.
+
+`TRACEABILITY.md` must stay specific enough that each requirement points to implementation evidence, validation evidence, acceptance owner, and release or migration dependency notes.
 
 ### 3. Wave Planning
 
@@ -189,6 +199,8 @@ Use [traceability-maintainer](../skills/traceability-maintainer/SKILL.md) to con
 
 Use [supabase-migration-discipline](../skills/supabase-migration-discipline/SKILL.md) when implementation changes the `supabase/` project, database schema, RLS policies, SQL functions, seed data, or generated database types.
 
+The acceptance check must confirm that `TRACEABILITY.md` records actual implementation evidence and actual validation evidence, not only planned coverage.
+
 If acceptance fails, reopen the necessary implementation tasks instead of advancing to shipping.
 
 ### 8. Completion Gate
@@ -241,6 +253,7 @@ Update the shared phase-2 memory files throughout implementation:
 - update `ai_docs/ideas/INDEX.md` with the initiative's current phase, status, latest artifact, and next action
 - update `IMPLEMENTATION_STATE.md` with E2E attempt state and final validation outcome
 - update `RELEASE_VERIFICATION.md` when implementation changes release readiness evidence
+- keep the structured summary blocks current so fresh-context subagents can resume with minimal rereading
 
 ## Output Rules
 

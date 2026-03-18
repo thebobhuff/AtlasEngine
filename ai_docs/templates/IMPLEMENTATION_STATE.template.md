@@ -4,6 +4,15 @@
 - Name:
 - Folder:
 
+## Structured Summary
+- Active planning mode: Full | Fast
+- Current owner:
+- Next owner:
+- Active gate: Building | Testing | E2E | Acceptance | Retro
+- Blocked by:
+- Decisions referenced:
+- Files changed:
+
 ## Overall Status
 - Current wave:
 - Current phase: Task Synthesis | Wave Planning | Building | Testing | Retro | Complete | Blocked
